@@ -1,7 +1,7 @@
 import kagglehub
 import os
 
-os.environ['KAGGLEHUB_CACHE'] = './data/'
+os.environ["KAGGLEHUB_CACHE"] = "./data/"
 
 try:
     path = kagglehub.dataset_download("olistbr/brazilian-ecommerce")
