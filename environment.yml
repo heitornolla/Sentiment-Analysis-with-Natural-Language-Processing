@@ -1,0 +1,6 @@
+name: bravium_heitor
+channels:
+  - conda-forge
+dependencies:
+  - python==3.13
+prefix: /home/heitor/miniforge3/envs/bravium
