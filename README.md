@@ -1,7 +1,7 @@
 # Olist Sentiment Analysis with Natural Language Processing
 
 ## About this project
-This project works with Olist's Brazilian E-Commerce Public Dataset. Our goal is to use this dataset to develop a classification model, which will identify if a customer review was positive or negative. Furthermore, we wish to gather explainability from the model, in this case, applying LIME and SHAP. We provide a Dockerfile and Poetry configuration file for ease of running and reproductibility. 
+This project works with **Olist's Brazilian E-Commerce Public Dataset**. Our goal is to use this dataset to develop a **classification model**, which will identify if a customer review was positive or negative. Furthermore, we wish to gather **explainability** from the model, in this case, applying **LIME** and **SHAP**. We provide a Dockerfile and Poetry configuration file for ease of running and reproductibility. 
 
 ## Environment Setup
 It is always recommended to have a separate python environment for different projects. This projects utilizes `Python 3.11.5`. We walk you through the environment configuration with Poetry and the highly recommended Docker image. pip and Conda were failing to build the project due to unresolved dependency issues with Numba, hence, their usage is not recommend - but feel free to try.
@@ -48,17 +48,17 @@ The only file that is dependent on having a `.pkl` model on the `/models` folder
 
 
 ## Exploratory Data Analysis (EDA)
-During the EDA phase, our main goal is to understand the dataset's features and their relationships with eachother. We exclude multiple files and records from the dataset, either due to them not being suited for the analysis or having missing data, and save a much smaller sample of the dataset for the cleaning stage.
+During the EDA phase, our main goal is to **understand the dataset's features** and their relationships with eachother. We exclude multiple files and records from the dataset, either due to them not being suited for the analysis or having missing data, and save a much smaller sample of the dataset for the cleaning stage.
 
 
 ## Data Cleaning / Pre-Processing
-Using the .csv file resulting from our EDA, we apply essential pre-processing steps on this stage, such as removing trailing whitespaces, emojis, special characters, and stemming.
+Using the .csv file resulting from our EDA, we apply essential **pre-processing** steps on this stage, such as removing trailing whitespaces, emojis, special characters, and stemming.
 
 
 ## NLP Model
-The model is defined on the `train.py` phase. The goal is to automatically classify reviews as positive or negative based on their text content. On this stage, we first transformed text into numerical features with TF–IDF vectorization, and then train the model.
+The model is defined on the `train.py` phase. The goal is to automatically **classify reviews as positive or negative** based on their text content. On this stage, we first transformed text into numerical features with **TF–IDF vectorization**, and then train the model.
 
-The model is a Logistic Regression classifier, trained using GridSearchCV to find the best hyperparameters (C, penalty, class_weight). The training set and test set are split 80-20. The model is optimized for F1-score, which balances performance across classes.
+The model is a **Logistic Regression** classifier, **trained using GridSearchCV** to find the best hyperparameters (C, penalty, class_weight). The training set and test set are split 80-20. The model is optimized for F1-score, which balances performance across classes.
 
 
 ## Evaluation and Explainability
@@ -67,24 +67,24 @@ To evaluate the model, we generate a classification graph, showcasing precision,
 ### Classification Report
 ![Model's Classification Report](metrics/classification_report.png)
 
-The blue (precision), orange (recall) and green (f1-score) bars show the metrics for each class. We can see that the model is overall more precise when detecting positive reviews, but shows solid scores on both cases.
+The blue (precision), orange (recall) and green (f1-score) bars show the metrics for each class. We can see that the model is overall **more precise when detecting positive reviews**, but shows **solid scores on both cases**.
 
 ### Confusion Matrix
 ![Model's Confusion Matrix](metrics/classification_report.png)
 
-As we see from the confusion matrix, the model's most frequent mistake is confusing negative reviews as positive. Aside from training and using other models, this could also be a result of an unbalanced dataset - one that has more positive reviews than negative ones.
+As we see from the confusion matrix, the model's most frequent mistake is **confusing negative reviews as positive**. Aside from training and using other models, this could also be a result of an unbalanced dataset - one that has more positive reviews than negative ones.
 
-For explainability, we want to know why a review was classified as positive or negative. We use two complementary tools:
+For explainability, we want to know why a review was classified as positive or negative. We use two complementary tools. The `explainability.py` file loads the trained Logistic Regression model and the TF–IDF pipeline and samples reviews, generating LIME and SHAP visualizations in the `/explainability` folder.
 
 ### LIME (Local Interpretable Model-agnostic Explanations)
-LIME works on individual predictions. For a given review, it identifies the top words that influenced the classification. In the code, the explanation is converted into a matplotlib figure and saved as lime.png.
+LIME works on individual predictions. For a given review, it **identifies the top words that influenced the classification**.
 
 ![Model's LIME Report](explainability/lime.png)
 
 This graph shows which words weighted the model the most towards a specific prediction. Green words weight towards a positive review and red ones, towards a negative review.
 
 ### SHAP (SHapley Additive exPlanations)
-SHAP provides a more general view. Instead of only explaining one prediction, it highlights the most influential words across many reviews. The `explainability.py` file loads the trained Logistic Regression model and the TF–IDF pipeline and samples reviews, generating LIME and SHAP visualizations in the `/explainability` folder.
+SHAP provides a more general view. Instead of only explaining one prediction, it **highlights the most influential words** across many reviews. 
 
 ![Model's SHAP Report](explainability/shap.png)
 
@@ -93,9 +93,9 @@ This is an SHAP Summary Plot. The Y-axis shows the most important words/features
 Red means the feature increased the chance of predicting “positive”, and blue means the feature pushed towards “negative”.Their position from left to right define how strong the impact was.
 
 ## Summary 
-In this project, we built a sentiment analysis model using Olist’s Brazilian E-Commerce Public Dataset. Our objective was to automatically classify customer reviews as positive or negative and to further interpret the model’s decisions using explainability tools.
+In this project, we built a **sentiment analysis model** using **Olist’s Brazilian E-Commerce Public Dataset**. Our objective was to automatically **classify customer reviews as positive or negative** and to further interpret the model’s decisions using **explainability tools**.
 
-The final model is a Logistic Regression classifier, trained on TF–IDF features and optimized with GridSearchCV. The training/test split was 80/20, and the model was optimized for F1-score.
+The final model is a **Logistic Regression** classifier, trained on **TF–IDF features** and optimized with GridSearchCV. The training/test split was 80/20, and the model was optimized for F1-score.
 
 ### Results:
 - **Accuracy**: ~88%
