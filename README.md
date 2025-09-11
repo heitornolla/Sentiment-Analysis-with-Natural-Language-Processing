@@ -5,7 +5,7 @@ General Steps:
 Env config -> EDA -> Data Cleaning -> NLP -> Benchmark
 
 ## Environment Setup
-It is always recommended to have a separate python environment for different projects. This projects utilizes `Python 3.13`. We walk you through the environment configuration with multiple package managers, but recommend building the project's Docker image for ease of use.
+It is always recommended to have a separate python environment for different projects. This projects utilizes `Python 3.12`. We walk you through the environment configuration with multiple package managers, but recommend building the project's Docker image for ease of use.
 
 We also try to ensure the notebooks can be executed on Colab, although some packages may need to be installed manually 
 
