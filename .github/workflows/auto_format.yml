@@ -1,0 +1,51 @@
+name: Auto Format with Black
+
+on:
+  push:
+    branches:
+      - "**" # All branches
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write # Allow pushing changes back
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1 # Changed to a more typical fetch depth
+
+      - name: Debug directory structure
+        run: |
+          ls -la
+          cat pyproject.toml
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: 2.1.3
+
+      - name: Clear Poetry cache
+        run: poetry cache clear --all pypi
+
+      - name: Install dependencies
+        run: poetry install --no-root
+
+      - name: Run Black to format code
+        run: poetry run black .
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-format code with Black"
+          git push
