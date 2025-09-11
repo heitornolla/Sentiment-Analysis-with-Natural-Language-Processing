@@ -64,12 +64,15 @@ The model is a Logistic Regression classifier, trained using GridSearchCV to fin
 ## Evaluation and Explainability
 To evaluate the model, we generate a classification graph, showcasing precision, recall and F1-score per class. We also save a confusion matrix (true vs predicted labels). Both are saved as .png images under the `/metrics` directory. Our model presented the following results:
 
-**Classification Report**
+### Classification Report
 ![Model's Classification Report](metrics/classification_report.png)
 
-**Confusion Matrix**
+The blue (precision), orange (recall) and green (f1-score) bars show the metrics for each class. We can see that the model is overall more precise when detecting positive reviews, but shows solid scores on both cases.
+
+### Confusion Matrix
 ![Model's Confusion Matrix](metrics/classification_report.png)
 
+As we see from the confusion matrix, the model's most frequent mistake is confusing negative reviews as positive. Aside from training and using other models, this could also be a result of an unbalanced dataset - one that has more positive reviews than negative ones.
 
 For explainability, we want to know why a review was classified as positive or negative. We use two complementary tools:
 
@@ -78,9 +81,29 @@ LIME works on individual predictions. For a given review, it identifies the top 
 
 ![Model's LIME Report](explainability/lime.png)
 
+This graph shows which words weighted the model the most towards a specific prediction. Green words weight towards a positive review and red ones, towards a negative review.
 
 ### SHAP (SHapley Additive exPlanations)
 SHAP provides a more general view. Instead of only explaining one prediction, it highlights the most influential words across many reviews. The `explainability.py` file loads the trained Logistic Regression model and the TF–IDF pipeline and samples reviews, generating LIME and SHAP visualizations in the `/explainability` folder.
 
-
 ![Model's SHAP Report](explainability/shap.png)
+
+This is an SHAP Summary Plot. The Y-axis shows the most important words/features, sorted by overall importance, while the X-axis shows their SHAP value (impact on the model’s output).
+
+Red means the feature increased the chance of predicting “positive”, and blue means the feature pushed towards “negative”.Their position from left to right define how strong the impact was.
+
+## Summary 
+In this project, we built a sentiment analysis model using Olist’s Brazilian E-Commerce Public Dataset. Our objective was to automatically classify customer reviews as positive or negative and to further interpret the model’s decisions using explainability tools.
+
+The final model is a Logistic Regression classifier, trained on TF–IDF features and optimized with GridSearchCV. The training/test split was 80/20, and the model was optimized for F1-score.
+
+### Results:
+- **Accuracy**: ~88%
+- **F1-score**: 0.82 (negative), 0.91 (positive)
+- **Precision/Recall**: the model is more reliable at detecting positive reviews, but still achieves solid results for negative ones.
+
+### Explainability:
+
+**LIME** demonstrated how individual words influence single predictions. **SHAP** provided a global perspective, ranking the most influential words across the dataset.
+
+Overall, the project achieved its dual goal: building a performant model for sentiment classification and making its predictions transparent and interpretable.

@@ -39,7 +39,13 @@ def run_shap_example(df, model, vectorizer, sample_size=100):
     shap_values = explainer(X_transformed)
 
     # Run SHAP on the first review and get results
-    shap.plots.bar(shap_values[0], max_display=10, show=False)
+    shap.summary_plot(
+        shap_values,
+        X_transformed,
+        feature_names=vectorizer.get_feature_names_out(),
+        show=False
+    )
+
     plt.savefig("explainability/shap.png", dpi=300, bbox_inches="tight")
     plt.close()
 
