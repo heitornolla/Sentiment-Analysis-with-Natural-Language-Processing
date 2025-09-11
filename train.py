@@ -2,13 +2,18 @@ import nltk
 import joblib
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import (
+    classification_report,
+    confusion_matrix,
+    ConfusionMatrixDisplay,
+)
 
 
 def get_pt_stopwords():
@@ -38,7 +43,7 @@ def get_text_processing_pipeline(portuguese_stopwords):
     return pipeline
 
 
-def get_model(pipeline, df_path="customer_reviews_preprocessed.csv"):
+def get_model(pipeline, df_path="processed_csvs/customer_reviews_preprocessed.csv"):
     df = pd.read_csv(df_path)
 
     if "comments" in df.columns:
@@ -69,11 +74,42 @@ def get_model(pipeline, df_path="customer_reviews_preprocessed.csv"):
     return grid, pipeline, (X_test, y_test)
 
 
+def plot_confusion_matrix(y_test, y_pred, labels):
+    cm = confusion_matrix(y_test, y_pred, labels=labels)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels)
+    disp.plot(cmap="Blues", values_format="d")
+    plt.title("Confusion Matrix")
+    plt.savefig("metrics/confusion_matrix.png", dpi=300)
+    plt.close()
+
+
+def plot_classification_report(y_test, y_pred, labels):
+    report = classification_report(
+        y_test, y_pred, target_names=labels, output_dict=True
+    )
+    df = pd.DataFrame(report).transpose()
+
+    df.iloc[:-3, :-1].plot(kind="bar", figsize=(8, 5))
+    plt.title("Classification Report")
+    plt.ylabel("Score")
+    plt.ylim(0, 1)
+    plt.xticks(rotation=45)
+    plt.legend(loc="lower right")
+    plt.tight_layout()
+    plt.savefig("metrics/classification_report.png", dpi=300)
+    plt.close()
+
+
 def predict_and_eval(grid, X_test, y_test):
     y_pred = grid.predict(X_test)
     print("Best Parameters:", grid.best_params_)
     print("\nClassification Report:\n", classification_report(y_test, y_pred))
     print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
+
+    # get graphs
+    labels = sorted(list(set(y_test)))
+    plot_confusion_matrix(y_test, y_pred, labels)
+    plot_classification_report(y_test, y_pred, labels)
 
 
 def save_model(grid, pipeline):
