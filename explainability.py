@@ -43,7 +43,7 @@ def run_shap_example(df, model, vectorizer, sample_size=100):
         shap_values,
         X_transformed,
         feature_names=vectorizer.get_feature_names_out(),
-        show=False
+        show=False,
     )
 
     plt.savefig("explainability/shap.png", dpi=300, bbox_inches="tight")
