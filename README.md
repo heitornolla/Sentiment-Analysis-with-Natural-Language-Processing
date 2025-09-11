@@ -62,13 +62,25 @@ The model is a Logistic Regression classifier, trained using GridSearchCV to fin
 
 
 ## Evaluation and Explainability
-To evaluate the model, we generate a classification graph, showcasing precision, recall and F1-score per class. We also save a confusion matrix (true vs predicted labels). Both are saved as .png images under the `/metrics` directory.
+To evaluate the model, we generate a classification graph, showcasing precision, recall and F1-score per class. We also save a confusion matrix (true vs predicted labels). Both are saved as .png images under the `/metrics` directory. Our model presented the following results:
+
+**Classification Report**
+![Model's Classification Report](metrics/classification_report.png)
+
+**Confusion Matrix**
+![Model's Confusion Matrix](metrics/classification_report.png)
+
 
 For explainability, we want to know why a review was classified as positive or negative. We use two complementary tools:
 
 ### LIME (Local Interpretable Model-agnostic Explanations)
 LIME works on individual predictions. For a given review, it identifies the top words that influenced the classification. In the code, the explanation is converted into a matplotlib figure and saved as lime.png.
 
+![Model's LIME Report](explainability/lime.png)
+
+
 ### SHAP (SHapley Additive exPlanations)
 SHAP provides a more general view. Instead of only explaining one prediction, it highlights the most influential words across many reviews. The `explainability.py` file loads the trained Logistic Regression model and the TF–IDF pipeline and samples reviews, generating LIME and SHAP visualizations in the `/explainability` folder.
 
+
+![Model's SHAP Report](explainability/shap.png)
