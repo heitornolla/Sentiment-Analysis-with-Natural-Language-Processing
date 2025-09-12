@@ -70,7 +70,7 @@ To evaluate the model, we generate a classification graph, showcasing precision,
 The blue (precision), orange (recall) and green (f1-score) bars show the metrics for each class. We can see that the model is overall **more precise when detecting positive reviews**, but shows **solid scores on both cases**.
 
 ### Confusion Matrix
-![Model's Confusion Matrix](metrics/classification_report.png)
+![Model's Confusion Matrix](metrics/confusion_matrix.png)
 
 As we see from the confusion matrix, the model's most frequent mistake is **confusing negative reviews as positive**. Aside from training and using other models, this could also be a result of an unbalanced dataset - one that has more positive reviews than negative ones.
 
