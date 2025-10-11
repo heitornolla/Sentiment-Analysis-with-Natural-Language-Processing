@@ -1,7 +1,7 @@
 # Olist Sentiment Analysis with Natural Language Processing
 
 ## About this project
-This project works with **Olist's Brazilian E-Commerce Public Dataset**. Our goal is to use this dataset to develop a **classification model**, which will identify if a customer review was positive or negative. Furthermore, we wish to gather **explainability** from the model, in this case, applying **LIME** and **SHAP**. We provide a Dockerfile and Poetry configuration file for ease of running and reproductibility. 
+This project works with **Olist's Brazilian E-Commerce Public Dataset**. Our goal is to use this dataset to develop a **classification model**, which will identify if a customer review was positive or negative. Furthermore, we gather **explainability** from the model through **LIME** and **SHAP**. We provide a Dockerfile and Poetry configuration file for ease of running and reproductibility. 
 
 ## Environment Setup
 It is always recommended to have a separate python environment for different projects. This projects utilizes `Python 3.11.5`. We walk you through the environment configuration with Poetry and the highly recommended Docker image. pip and Conda were failing to build the project due to unresolved dependency issues with Numba, hence, their usage is not recommend - but feel free to try.
